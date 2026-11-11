@@ -10,7 +10,7 @@ A redesign of armosealinsulation.com, built as a plain static site using HTML, C
 
 ## View it on your computer
 ```bash
-python3 -m http.server 8080
+python3 serve.py
 ```
 Then open http://localhost:8080. You can also double-click `index.html`.
 
