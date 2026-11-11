@@ -589,3 +589,57 @@ p { margin: 0 0 1em; }
   html { scroll-behavior: auto; }
   .btn { transition: none; }
 }
+
+/* ---------- Blog ---------- */
+.post-grid { align-items: stretch; }
+.post-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.post-card:hover, .post-card:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(31, 42, 51, 0.14); }
+.post-card h2 { font-size: 1.35rem; margin: 10px 0 12px; color: var(--navy-dark); }
+.post-card p { color: var(--ink-soft); flex: 1; }
+.post-tag {
+  align-self: flex-start;
+  background: var(--amber-light);
+  color: var(--amber-dark);
+  font-weight: 700;
+  font-size: .9rem;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+.read-more { font-weight: 700; color: var(--amber-dark); margin-top: 8px; }
+
+.article { padding: 56px 0 80px; background: var(--white); }
+.article h1 { font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15; margin: 8px 0 10px; }
+.article h2 { font-size: 1.6rem; margin: 40px 0 12px; }
+.article p, .article li { font-size: 1.15rem; line-height: 1.7; }
+.article ul, .article ol { padding-left: 1.3em; }
+.article li { margin-bottom: 10px; }
+.article a { color: var(--amber-dark); }
+.back-link { display: table; font-weight: 700; margin-bottom: 24px; text-decoration: none; }
+.article-byline { color: var(--ink-soft); margin: 0 0 28px; }
+.quick-answer {
+  background: var(--cream);
+  border-left: 6px solid var(--amber);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  margin-bottom: 12px;
+}
+.quick-answer h2 { margin: 0 0 6px; font-size: 1.25rem; }
+.quick-answer p { margin: 0; font-size: 1.2rem; }
+.compare { width: 100%; border-collapse: collapse; margin: 12px 0 8px; font-size: 1.05rem; }
+.compare th, .compare td { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.compare thead th { background: var(--sand); }
+.compare tbody th { width: 34%; }
+.article-note { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 1.05rem !important; }
+.related { background: var(--cream); border-radius: var(--radius); padding: 8px 26px 18px; margin-top: 28px; }
+.related h2 { font-size: 1.3rem; margin-top: 18px; }
+@media (max-width: 640px) {
+  .compare { font-size: .98rem; }
+  .compare th, .compare td { padding: 10px 6px; }
+  .quick-answer { padding: 18px; }
+}
