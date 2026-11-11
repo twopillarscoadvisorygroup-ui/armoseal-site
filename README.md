@@ -22,3 +22,6 @@ Then open http://localhost:8080. You can also double-click `index.html`.
 
 ## Putting it online later
 Upload this whole folder to any static host. Netlify, Cloudflare Pages and GitHub Pages are all free. Then connect your domain. The quote form currently opens the visitor's email app. Once the site is online, you can switch it to a form service such as Formspree or Netlify Forms so requests come straight to your inbox.
+
+## Wix rebuild guide
+`wix-guide/index.html` is a step-by-step guide for rebuilding this site in Wix, with copy buttons for every piece of text. Open it at http://localhost:8080/wix-guide/ while the preview server is running. The photos to upload to Wix are in `wix-guide/upload/`. If you change the site, run `python3 wix-guide/build.py` to update the guide.

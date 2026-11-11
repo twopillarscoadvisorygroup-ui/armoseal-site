@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wix Rebuild Guide</title>
+<style>
+:root {
+  --navy: #061a33; --blue: #0b3a6f; --orange: #f57c00; --orange-dark: #b04c00; --orange-light: #ffe6cc;
+  --cream: #fbf6ee; --sand: #f3e8d6; --line: #e2d5c1; --ink: #14213a; --soft: #3a4a60; --ok: #1d7a3a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font: 18px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--cream); }
+h1, h2, h4 { font-family: Georgia, "Times New Roman", serif; color: var(--navy); line-height: 1.2; }
+code { background: var(--sand); padding: 1px 6px; border-radius: 5px; font-size: .9em; }
+a { color: var(--blue); }
+.top { background: var(--navy); color: #fff; padding: 28px 20px; }
+.top .wrap { max-width: 1180px; margin: 0 auto; display: flex; gap: 20px; align-items: center; }
+.top img { height: 84px; background: #fff; border-radius: 12px; padding: 6px; }
+.top h1 { color: #fff; margin: 0 0 4px; font-size: 2rem; }
+.top p { margin: 0; color: #dfe7ed; }
+.progress { max-width: 1180px; margin: 14px auto 0; }
+.bar { height: 12px; background: rgba(255,255,255,.18); border-radius: 99px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--orange); transition: width .3s; }
+.progress small { color: #dfe7ed; }
+.layout-wrap { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 250px 1fr; gap: 32px; padding: 28px 20px 80px; }
+nav.toc { position: sticky; top: 16px; align-self: start; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+nav.toc ol { margin: 0; padding-left: 0; list-style: none; }
+nav.toc a { display: block; padding: 8px 10px; border-radius: 8px; text-decoration: none; color: var(--ink); font-weight: 600; font-size: .95rem; }
+nav.toc a:hover { background: var(--sand); }
+nav.toc a.is-done { color: var(--ok); }
+nav.toc a.is-done::after { content: " ✓"; }
+.step { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 26px 28px; margin-bottom: 28px; position: relative; scroll-margin-top: 16px; }
+.step > h2 { margin: 0 0 12px; font-size: 1.7rem; padding-right: 110px; }
+.stepno { display: block; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: var(--orange-dark); }
+label.done { position: absolute; top: 24px; right: 24px; display: flex; gap: 8px; align-items: center; font-weight: 700; background: var(--cream); border: 2px solid var(--line); border-radius: 10px; padding: 8px 12px; cursor: pointer; }
+label.done input { width: 22px; height: 22px; accent-color: var(--ok); }
+.step.is-done { border-color: #9bd3ad; }
+.step.is-done label.done { border-color: var(--ok); color: var(--ok); }
+.lead { font-size: 1.1rem; }
+.hint { background: var(--cream); border-left: 5px solid var(--orange); padding: 10px 14px; border-radius: 6px; }
+ol.steps-list li, ul.check li { margin-bottom: 8px; }
+.block { border: 1px solid var(--line); border-radius: 12px; margin: 18px 0; overflow: hidden; }
+.block-head { display: flex; gap: 14px; align-items: flex-start; background: var(--sand); padding: 14px 16px; }
+.block-head h4 { margin: 0 0 4px; font-size: 1.2rem; }
+.layout { margin: 0; color: var(--soft); font-size: .95rem; }
+.num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--blue); color: #fff; display: inline-grid; place-items: center; font-weight: 700; font-size: .95rem; }
+.item { display: grid; grid-template-columns: 210px 1fr auto; gap: 14px; align-items: start; padding: 12px 16px; border-top: 1px solid var(--line); }
+.item-label { font-size: .85rem; font-weight: 700; color: var(--soft); text-transform: none; }
+.item-label small { font-weight: 400; display: block; margin-top: 4px; }
+.item-text { white-space: pre-line; }
+.item-body ul, .item-body ol { margin: 0; padding-left: 1.2em; }
+.item-body table { border-collapse: collapse; font-size: .95rem; }
+.item-body td, .item-body th { border: 1px solid var(--line); padding: 6px 10px; text-align: left; }
+.link { margin-top: 6px; font-size: .9rem; color: var(--blue); font-weight: 600; }
+.alt { font-size: .9rem; color: var(--soft); margin-top: 6px; }
+.thumb { max-width: 220px; max-height: 160px; border-radius: 8px; border: 1px solid var(--line); display: block; }
+.thumb.small { max-height: 90px; }
+.icon { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; background: var(--orange-light); color: var(--orange-dark); }
+.icon svg { width: 28px; height: 28px; }
+button.copy { font: inherit; font-size: .9rem; font-weight: 700; background: var(--orange); color: var(--navy); border: 0; border-radius: 9px; padding: 8px 14px; cursor: pointer; white-space: nowrap; min-height: 40px; }
+button.copy:hover { background: #e86c00; }
+button.copy.copied { background: var(--ok); color: #fff; }
+.swatches { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 14px 0; }
+.swatch { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.swatch > div { flex: 1; }
+.chip { width: 44px; height: 44px; border-radius: 10px; border: 1px solid rgba(0,0,0,.15); flex: none; }
+table.spec { border-collapse: collapse; width: 100%; margin: 10px 0; }
+table.spec th, table.spec td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; vertical-align: top; }
+table.spec th { background: var(--cream); width: 34%; }
+.uploads { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 12px; }
+.upload { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: .85rem; }
+.upload img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; background: #fff; }
+.upload div { padding: 8px 10px; word-break: break-word; }
+details { border: 1px solid var(--line); border-radius: 12px; margin: 14px 0; overflow: hidden; }
+details > summary { cursor: pointer; padding: 14px 16px; font-weight: 700; background: var(--cream); list-style: revert; }
+details.post > summary { font-family: Georgia, serif; font-size: 1.1rem; color: var(--navy); display: flex; gap: 12px; align-items: center; }
+details[open] > summary { border-bottom: 1px solid var(--line); }
+details.seo { margin-top: 0; }
+details .hint { margin: 12px 16px; }
+.btn-sample { display: inline-block; padding: 14px 26px; border-radius: 12px; font-weight: 700; margin: 4px 8px 4px 0; }
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--navy); color: #fff; padding: 10px 18px; border-radius: 10px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+@media (max-width: 900px) {
+  .layout-wrap { grid-template-columns: 1fr; }
+  nav.toc { position: static; }
+  .item { grid-template-columns: 1fr; }
+  .swatches { grid-template-columns: 1fr; }
+  .uploads { grid-template-columns: repeat(2, 1fr); }
+  .step > h2 { padding-right: 0; padding-top: 44px; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <img src="upload/01-armoseal-logo.jpg" alt="Armoseal Insulation logo">
+    <div>
+      <h1>Rebuilding the Armoseal site in Wix</h1>
+      <p>Work through the steps in order. Every piece of text has a <b>Copy</b> button: click it, then paste into Wix with <b>Cmd+V</b>.</p>
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><span id="bar"></span></div><small id="progress-text">0 of 12 steps done</small></div>
+</header>
+
+<div class="layout-wrap">
+<nav class="toc" aria-label="Steps">
+  <ol>
+    <li><a href="#start">1. Before you start</a></li>
+    <li><a href="#design">2. Colors and fonts</a></li>
+    <li><a href="#upload">3. Upload photos</a></li>
+    <li><a href="#header">4. Header and footer</a></li>
+    <li><a href="#home">5. Home page</a></li>
+    <li><a href="#services">6. Services page</a></li>
+    <li><a href="#about">7. About Us page</a></li>
+    <li><a href="#blog">8. Blog page</a></li>
+    <li><a href="#contact">9. Contact page</a></li>
+    <li><a href="#posts">10. Blog posts</a></li>
+    <li><a href="#mobile">11. Phone view</a></li>
+    <li><a href="#publish">12. Clean up and publish</a></li>
+  </ol>
+</nav>
+
+<main>
+<section class="step" id="start">
+  <label class="done"><input type="checkbox" data-step="start"> Done</label>
+  <h2><span class="stepno">Step 1</span> Before you start</h2>
+  <ol class="steps-list">
+    <li><b>Work on your existing Wix site</b>, the one connected to armosealinsulation.com. That way your 2-year plan and your domain stay attached, and nothing needs to be moved.</li>
+    <li><b>Make a backup copy first.</b> In your Wix dashboard, open the site’s <b>Site Actions</b> (⋯) menu and choose <b>Duplicate Site</b>. If anything goes wrong, the old site is still there.</li>
+    <li><b>Open the Editor</b> and go through the old pages. You will rebuild <b>Home</b>, and create <b>Services</b>, <b>About Us</b>, <b>Blog</b> and <b>Contact</b>. The old <b>Portfolio</b> page can be deleted. <b>Book Online</b> is optional: the new design doesn’t include it, so delete it unless you still want online booking.</li>
+    <li>Keep the new site open in another tab to look at while you work: <a href="http://localhost:8080" target="_blank">http://localhost:8080</a> (it works while the preview is running on this computer).</li>
+  </ol>
+  <p class="hint">Wix sometimes renames its menus. If a button name in this guide doesn’t match exactly, look for the closest match. Tick <b>Done</b> on each step as you finish. This browser remembers your ticks.</p>
+</section>
+
+<section class="step" id="design">
+  <label class="done"><input type="checkbox" data-step="design"> Done</label>
+  <h2><span class="stepno">Step 2</span> Colors and fonts</h2>
+  <p>Set these once and every new section will match. In the Wix Editor, open <b>Site Design</b> (the paint palette icon), then <b>Colors</b> and <b>Text</b>.</p>
+  <h4>Colors</h4>
+  <div class="swatches">%%colors%%</div>
+  <h4>Fonts and sizes</h4>
+  <table class="spec">
+    <tr><th>Headings</th><td><b>Georgia</b>, bold, dark navy #061A33. If Georgia isn’t in Wix’s font list, use <b>Libre Baskerville</b>.</td></tr>
+    <tr><th>Body text</th><td><b>Helvetica</b> or <b>Arial</b> (Roboto also works), #14213A. Never smaller than <b>18px</b>, which keeps it easy to read for older visitors.</td></tr>
+    <tr><th>Page title (largest)</th><td>About 56px on computers, 38px on phones</td></tr>
+    <tr><th>Section heading</th><td>About 40px on computers, 30px on phones</td></tr>
+    <tr><th>Smaller heading</th><td>About 22px</td></tr>
+    <tr><th>Small orange label</th><td>About 15px, bold, ALL CAPS, letter spacing about 1px, color #B04C00</td></tr>
+  </table>
+  <h4>Buttons</h4>
+  <p>
+    <span class="btn-sample" style="background:#F57C00;color:#061A33">Main button</span>
+    <span class="btn-sample" style="background:#fff;color:#061A33;border:2px solid #0B3A6F">Second button</span>
+  </p>
+  <table class="spec">
+    <tr><th>Main button</th><td>Fill #F57C00, text #061A33 (dark navy, <b>not white</b>, which is too hard to read on this orange), bold 18px, rounded corners 12px, at least 56px tall. On hover: #E86C00.</td></tr>
+    <tr><th>Second button</th><td>White fill, dark navy text, 2px border #0B3A6F, same shape. On hover: fill #0B3A6F, white text.</td></tr>
+    <tr><th>Phone buttons</th><td>Add a phone icon before the text if Wix offers one.</td></tr>
+  </table>
+</section>
+
+<section class="step" id="upload">
+  <label class="done"><input type="checkbox" data-step="upload"> Done</label>
+  <h2><span class="stepno">Step 3</span> Upload the photos</h2>
+  <p>All 8 images are in one folder on your computer: <code>Projects › new-web-app › wix-guide › upload</code>. In Wix, open <b>Media</b> (or Add → Image → Upload) and upload the whole folder at once. Then you can pick them whenever this guide says “Upload: …”.</p>
+  <div class="uploads">%%uploads%%</div>
+</section>
+
+<section class="step" id="header">
+  <label class="done"><input type="checkbox" data-step="header"> Done</label>
+  <h2><span class="stepno">Step 4</span> Header and footer (shown on every page)</h2>
+  <p>In Wix, the header and footer are shared by all pages, so you only build them once.</p>
+  %%header%%
+</section>
+
+%%pages%%
+
+<section class="step" id="posts">
+  <label class="done"><input type="checkbox" data-step="posts"> Done</label>
+  <h2><span class="stepno">Step 10</span> The 7 blog posts</h2>
+  <p>In your Wix dashboard, go to <b>Blog → Create New Post</b> for each one. Copy the title, then the body pieces in order. First create the categories under <b>Blog → Categories</b>: Choosing insulation, Spray foam, Home comfort, Attics, Inspections and Saving money. Set the author to Antonio Johnson Jr., or to “Armoseal Insulation” if you prefer.</p>
+  <p class="hint">Wix shows “related posts” at the bottom of each post automatically, so you don’t need to copy those links.</p>
+  %%posts%%
+</section>
+
+<section class="step" id="mobile">
+  <label class="done"><input type="checkbox" data-step="mobile"> Done</label>
+  <h2><span class="stepno">Step 11</span> Check the phone view</h2>
+  <p>Many visitors will be on phones. Click the <b>phone icon</b> at the top of the Wix Editor to switch to the mobile view, then go through every page:</p>
+  <ul class="check">
+    <li>Columns should stack: picture on top, text underneath. Cards should go one per row.</li>
+    <li>Text should be <b>at least 18px</b>. Wix sometimes shrinks it on phones, so make it bigger if needed.</li>
+    <li>Buttons should be big and easy to tap. Make the main buttons stretch the full width.</li>
+    <li><b>Add a “Call” button that’s always visible.</b> In the mobile editor, look for <b>Mobile Tools → Quick Action Bar</b> and turn on a <b>Call</b> action with %%phone%%. If your editor doesn’t have it, add a “Call Us” button and set it to <b>Pin to Screen</b> at the bottom.</li>
+    <li>Top bar: on phones, show only “Call us: %%phone%%”, centered. Hide the service-area text there.</li>
+  </ul>
+</section>
+
+<section class="step" id="publish">
+  <label class="done"><input type="checkbox" data-step="publish"> Done</label>
+  <h2><span class="stepno">Step 12</span> Clean up and publish</h2>
+  <p>Your current Wix site still has some leftover template content. Make sure all of it is gone:</p>
+  <ul class="check">
+    <li>The placeholder email <b>info@mysite.com</b> in the footer. The real email is %%email%%.</li>
+    <li>Social media icons that link to <b>Wix’s own</b> Facebook, Instagram, X and TikTok pages. Remove them, or link them to Armoseal’s real profiles.</li>
+    <li>“© 2035” in the footer. It should say 2026.</li>
+    <li>Old pages you aren’t using: Welcome, Portfolio, and Book Online if you don’t want it.</li>
+  </ul>
+  <p>Then:</p>
+  <ol class="steps-list">
+    <li>In the dashboard, open <b>Settings → Business Info</b> and enter the phone, email, address (400 N Tampa St, Tampa, FL 33602) and hours (Mon–Fri, 9:00 AM – 5:00 PM).</li>
+    <li>Click <b>Preview</b> and go through every page and button. Tap every phone link on a real phone.</li>
+    <li>Send yourself a <b>test quote request</b> through the Contact form and make sure it arrives.</li>
+    <li>Click <b>Publish</b>. Then open armosealinsulation.com on a computer and on a phone.</li>
+  </ol>
+</section>
+</main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+
+<script>
+(function () {
+  var toast = document.getElementById("toast"), timer;
+  function show(msg) {
+    toast.textContent = msg; toast.classList.add("show");
+    clearTimeout(timer); timer = setTimeout(function () { toast.classList.remove("show"); }, 1400);
+  }
+  function legacyCopy(text) {
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.top = "0"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+      ok ? resolve() : reject();
+    });
+  }
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(function () { return legacyCopy(text); });
+    }
+    return legacyCopy(text);
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("button.copy");
+    if (!b) return;
+    var label = b.textContent;
+    copyText(b.getAttribute("data-copy")).then(function () {
+      b.classList.add("copied"); b.textContent = "Copied ✓"; show("Copied. Now paste it into Wix with Cmd+V");
+      setTimeout(function () { b.classList.remove("copied"); b.textContent = label; }, 1600);
+    }, function () {
+      // Copying was blocked: highlight the text so one Cmd+C copies it
+      var item = b.closest(".item"), target = item && item.querySelector(".item-text, .item-body ul, .item-body table, .alt");
+      if (target) {
+        var r = document.createRange(); r.selectNodeContents(target);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        show("Text highlighted. Press Cmd+C to copy it");
+      } else {
+        show("Couldn’t copy. Select the text and press Cmd+C instead");
+      }
+    });
+  });
+
+  // "Done" checkboxes, remembered in this browser
+  var KEY = "armoseal-wix-guide-done";
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+  var boxes = document.querySelectorAll("input[data-step]");
+  function refresh() {
+    var n = 0;
+    boxes.forEach(function (box) {
+      var id = box.getAttribute("data-step"), on = !!done[id];
+      box.checked = on; if (on) n++;
+      box.closest(".step").classList.toggle("is-done", on);
+      var link = document.querySelector('nav.toc a[href="#' + id + '"]');
+      if (link) link.classList.toggle("is-done", on);
+    });
+    document.getElementById("bar").style.width = (n / boxes.length * 100) + "%";
+    document.getElementById("progress-text").textContent = n + " of " + boxes.length + " steps done";
+  }
+  boxes.forEach(function (box) {
+    box.addEventListener("change", function () {
+      done[box.getAttribute("data-step")] = box.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {}
+      refresh();
+    });
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>
