@@ -140,15 +140,17 @@ p { margin: 0 0 1em; }
 .photo.logo-panel {
   background: #fff;
   border: 1px solid var(--line);
-  padding: 28px;
   aspect-ratio: 1 / 1;   /* square box so the whole tall logo fits, larger */
   max-width: 520px;
   width: 100%;
   justify-self: center;
 }
-.photo.logo-panel img {
-  width: 100%;
-  height: 100%;
+/* Logo sits inside the square with a 28px white margin on every side.
+   Positioned absolutely so Safari sizes it the same as Chrome. */
+.photo.logo-panel > img {
+  inset: 28px;
+  width: calc(100% - 56px);
+  height: calc(100% - 56px);
   object-fit: contain;
   object-position: center;
   mix-blend-mode: multiply; /* hides the logo file's off-white background */
@@ -362,8 +364,17 @@ p { margin: 0 0 1em; }
   overflow: hidden;
   background: var(--sand);
   aspect-ratio: 4 / 3;
+  position: relative;
 }
-.photo img { width: 100%; height: 100%; object-fit: cover; }
+/* Photos fill their box exactly. Absolute positioning makes Safari and
+   Chrome size them the same way (no clipped bottoms or empty gaps). */
+.photo > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .photo-placeholder {
   display: grid;
   place-items: center;
