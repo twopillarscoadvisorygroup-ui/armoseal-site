@@ -140,7 +140,11 @@ p { margin: 0 0 1em; }
 .photo.logo-panel {
   background: #fff;
   border: 1px solid var(--line);
-  padding: 24px;
+  padding: 28px;
+  aspect-ratio: 1 / 1;   /* square box so the whole tall logo fits, larger */
+  max-width: 520px;
+  width: 100%;
+  justify-self: center;
 }
 .photo.logo-panel img {
   width: 100%;
